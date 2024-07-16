@@ -32,24 +32,3 @@ function Home() {
 }
 
 export default Home;
-
-
-// src/Pages/Home.js
-// import React from 'react';
-
-// function Home() {
-//   const testImageUrl = 'https://i.imgur.com/dsQzZXq.jpeg';
-
-//   return (
-//     <div>
-//       <main>
-//         <div>
-//           <h1>Test Image</h1>
-//           <img src={testImageUrl} alt="Test Image" style={{ maxWidth: '100%' }} />
-//         </div>
-//       </main>
-//     </div>
-//   );
-// }
-
-// export default Home;
