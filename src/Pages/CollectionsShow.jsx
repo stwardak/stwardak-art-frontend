@@ -3,14 +3,13 @@ import axios from 'axios';
 import ArtworkItem from '../components/ArtworkItem';
 import { useParams } from 'react-router-dom';
 
-const CollectionsShow = () => {
+const CollectionsShow = ({ onShowArtwork }) => {
   const { id } = useParams();
   const [collection, setCollection] = useState(null);
 
   useEffect(() => {
     axios.get(`http://localhost:3000/collections/${id}`)
       .then(response => {
-        console.log("Collection data fetched:", response.data); // Debugging statement
         setCollection(response.data);
       })
       .catch(error => {
@@ -25,15 +24,12 @@ const CollectionsShow = () => {
       <h1>{collection.name}</h1>
       <p>{collection.description}</p>
       <ul>
-        {/* {collection.artworks.map(artwork => (
-          <ArtworkItem key={artwork.id} artwork={artwork} />
-        ))} */}
         {collection.artworks && collection.artworks.length > 0 ? (
           collection.artworks.map(artwork => (
-          <ArtworkItem key={artwork.id} artwork={artwork} />
-        ))
+            <ArtworkItem key={artwork.id} artwork={artwork} onShowArtwork={onShowArtwork} />
+          ))
         ) : (
-        <p>No artworks found in this collection.</p>
+          <p>No artworks found in this collection.</p>
         )}
       </ul>
     </div>

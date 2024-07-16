@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ArtworkItem from '../components/ArtworkItem';
 import Collections from './Collections';
 
-function Home() {
+function Home({ onShowArtwork }) {
   const [artworks, setArtworks] = useState([]);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function Home() {
           <h1>Artworks</h1>
           <ul>
             {artworks.map(artwork => (
-              <ArtworkItem key={artwork.id} artwork={artwork} />
+              <ArtworkItem key={artwork.id} artwork={artwork} onShowArtwork={onShowArtwork}/>
             ))}
           </ul>
           <Collections />
