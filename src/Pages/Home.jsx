@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ArtworkItem from '../components/ArtworkItem';
+import Collections from './Collections';
 
 function Home() {
   const [artworks, setArtworks] = useState([]);
@@ -25,6 +26,7 @@ function Home() {
               <ArtworkItem key={artwork.id} artwork={artwork} />
             ))}
           </ul>
+          <Collections />
         </div>
       </main>
     </div>

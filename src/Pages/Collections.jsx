@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function Collections() {
   const [collections, setCollections] = useState([]);
@@ -16,14 +17,16 @@ function Collections() {
 
   return (
     <div>
-      <h1>Collections</h1>
+      <h2>Collections</h2>
       <ul>
         {collections.map(collection => (
-          <li key={collection.id}>{collection.name}</li>
+          <li key={collection.id}>
+            <Link to={`/collections/${collection.id}`}>{collection.name}</Link>
+          </li>
         ))}
       </ul>
     </div>
   );
-}
+};
 
 export default Collections;
