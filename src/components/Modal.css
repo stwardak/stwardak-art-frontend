@@ -11,7 +11,7 @@
 
 .modal-main {
   position: fixed;
-  /* background: white; */
+  background-color: var(--art-color-2);
   width: 80%;
   height: auto;
   top: 50%;

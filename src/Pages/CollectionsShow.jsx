@@ -10,7 +10,8 @@ const CollectionsShow = ({ onShowArtwork }) => {
   useEffect(() => {
     axios.get(`http://localhost:3000/collections/${id}`)
       .then(response => {
-        setCollection(response.data);
+        const shuffledArtworks = response.data.artworks.sort(() => Math.random() - 0.5);
+        setCollection({ ...response.data, artworks: shuffledArtworks });
       })
       .catch(error => {
         console.error('There was an error fetching the collection!', error);
@@ -20,18 +21,20 @@ const CollectionsShow = ({ onShowArtwork }) => {
   if (!collection) return <p>Loading...</p>;
 
   return (
-    <div>
-      <h1>{collection.name}</h1>
-      <p>{collection.description}</p>
-      <ul>
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold text-center mb-4">{collection.name}</h1>
+      <p className="text-center mb-8">{collection.description}</p>
+      <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
         {collection.artworks && collection.artworks.length > 0 ? (
           collection.artworks.map(artwork => (
-            <ArtworkItem key={artwork.id} artwork={artwork} onShowArtwork={onShowArtwork} />
+            <div key={artwork.id} className="break-inside-avoid">
+              <ArtworkItem artwork={artwork} onShowArtwork={onShowArtwork} />
+            </div>
           ))
         ) : (
-          <p>No artworks found in this collection.</p>
+          <p className="col-span-full text-center">No artworks found in this collection.</p>
         )}
-      </ul>
+      </div>
     </div>
   );
 };
