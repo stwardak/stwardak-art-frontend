@@ -1,0 +1,20 @@
+:root {
+  --art-color-light-2: #231f20;
+  --art-color-dark-2: #f9f9f9;
+}
+
+html.light {
+  --art-color-2: var(--art-color-light-2);
+}
+
+html.dark {
+  --art-color-2: var(--art-color-dark-2);
+}
+
+.cls-2 {
+  fill: var(--art-color-2);
+}
+
+.cls-3 {
+  fill: #fdbd18;
+}
