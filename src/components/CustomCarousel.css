@@ -1,0 +1,37 @@
+.slick-slide {
+  transition: opacity 0.5s, filter 0.5s;
+}
+
+.slick-center {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.slick-slide:not(.slick-center) {
+  filter: blur(4px);
+  opacity: 0.5;
+}
+
+.slick-prev,
+.slick-next {
+  display: none !important;
+}
+
+.custom-next-arrow,
+.custom-prev-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 10;
+  width: 5rem;
+  height: 5rem;
+}
+
+.custom-next-arrow {
+  right: 0;
+}
+
+.custom-prev-arrow {
+  left: 0;
+}

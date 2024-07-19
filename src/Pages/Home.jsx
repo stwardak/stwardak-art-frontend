@@ -21,16 +21,18 @@ function Home({ onShowArtwork }) {
     <div>
       <main>
         <div className="flex justify-center items-center">
-          <img src={artBanner} alt="ST Art." className="w-1/2"/>
+          <img src={artBanner} alt="ST Art." className="w-full md:w-1/2"/>
+        </div>
+        <div className="py-40">
+          <Collections />
         </div>
         <div>
           <h1>Artworks</h1>
-          <ul>
+          <ul className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
             {artworks.map(artwork => (
               <ArtworkItem key={artwork.id} artwork={artwork} onShowArtwork={onShowArtwork}/>
             ))}
           </ul>
-          <Collections />
         </div>
       </main>
     </div>
