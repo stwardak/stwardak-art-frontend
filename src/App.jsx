@@ -9,6 +9,9 @@ import CollectionsShow from './Pages/CollectionsShow';
 import { Modal } from './components/Modal';
 import { ArtworksShow } from './components/ArtworksShow';
 import Contact from './Pages/Contact';
+import { Login } from './components/Login';
+import { Logout } from './components/Logout';
+import ArtworkForm from './components/ArtworkForm';
 
 function App() {
 
@@ -37,6 +40,9 @@ function App() {
           <Route path="/collections" element={<Collections />} />
           <Route path="/collections/:id" element={<CollectionsShow onShowArtwork={handleShowArtwork} />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
+          <Route path="/new" element={<ArtworkForm />}/>
         </Routes>
         <Modal show={isArtworksShowVisible} onClose={handleClose}>
           <ArtworksShow artwork={currentArtwork} />
