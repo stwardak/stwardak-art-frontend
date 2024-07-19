@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function ArtworkForm({ artwork, setArtwork }) {
+function ArtworkForm({ artwork, setArtwork, onClose }) {
   const [collections, setCollections] = useState([]);
   const [formData, setFormData] = useState({
     title: artwork?.title || '',
@@ -56,16 +56,16 @@ function ArtworkForm({ artwork, setArtwork }) {
     }
 
     const url = artwork ? `http://localhost:3000/artworks/${artwork.id}.json` : `http://localhost:3000/artworks.json`;
-    axios.post(url, data, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    }).then(response => {
-      console.log(response.data);
-      setArtwork(response.data);  // Update local state or trigger a redirect
-    }).catch(error => {
-      console.log(error);
-    });
+    const method = artwork ? 'patch' : 'post';
+    axios({ method, url, data, headers: { 'Content-Type': 'multipart/form-data' } })
+      .then(response => {
+        console.log(response.data);
+        setArtwork(response.data); 
+        onClose();
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   return (
@@ -102,8 +102,9 @@ function ArtworkForm({ artwork, setArtwork }) {
             </div>
           ))}
         </div>
-        <div>
-          <button type="submit">Submit</button>
+        <div className="space-x-4">
+          <button type="submit" className="bg-yellow px-4 rounded-full w-20 text-sm">Submit</button>
+          <button type="button" className="bg-yellow px-4 rounded-full w-20 text-sm" onClick={onClose}>Cancel</button>
         </div>
       </form>
     </div>

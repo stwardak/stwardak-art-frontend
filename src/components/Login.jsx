@@ -19,6 +19,9 @@ export function Login() {
         console.log(response.data);
         axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
         localStorage.setItem("jwt", response.data.jwt);
+        localStorage.setItem("isAdmin", response.data.isAdmin);
+        console.log("Admin Status Set:", response.data.isAdmin);
+
         event.target.reset();
         window.location.href = "/";
       })

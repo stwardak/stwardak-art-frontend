@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ArtworkItem from '../components/ArtworkItem';
 import { useParams } from 'react-router-dom';
+import { Modal } from '../components/Modal';
 
-const CollectionsShow = ({ onShowArtwork }) => {
+const CollectionsShow = () => {
   const { id } = useParams();
   const [collection, setCollection] = useState(null);
+  const [currentArtwork, setCurrentArtwork] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     axios.get(`http://localhost:3000/collections/${id}`)
@@ -18,6 +22,51 @@ const CollectionsShow = ({ onShowArtwork }) => {
       });
   }, [id]);
 
+  const handleShowArtwork = (artwork) => {
+    setCurrentArtwork(artwork);
+    setEditMode(false);
+    setShowModal(true);
+  };
+
+  const handleEditArtwork = (artwork) => {
+    setCurrentArtwork(artwork);
+    setEditMode(true);
+    setShowModal(true);
+  };
+
+  const handleDeleteArtwork = (artworkId) => {
+    axios.delete(`http://localhost:3000/artworks/${artworkId}.json`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('jwt')}` }
+    }).then(() => {
+      setCollection({
+        ...collection,
+        artworks: collection.artworks.filter(artwork => artwork.id !== artworkId)
+      });
+      setShowModal(false);
+    }).catch(error => console.error('Failed to delete artwork:', error));
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setEditMode(false);
+    setCurrentArtwork(null);
+  };
+
+  const handleSaveArtwork = (updatedArtwork) => {
+    if (editMode) {
+      setCollection({
+        ...collection,
+        artworks: collection.artworks.map(artwork => artwork.id === updatedArtwork.id ? updatedArtwork : artwork)
+      });
+    } else {
+      setCollection({
+        ...collection,
+        artworks: [...collection.artworks, updatedArtwork]
+      });
+    }
+    handleCloseModal();
+  };
+
   if (!collection) return <p>Loading...</p>;
 
   return (
@@ -28,13 +77,22 @@ const CollectionsShow = ({ onShowArtwork }) => {
         {collection.artworks && collection.artworks.length > 0 ? (
           collection.artworks.map(artwork => (
             <div key={artwork.id} className="break-inside-avoid">
-              <ArtworkItem artwork={artwork} onShowArtwork={onShowArtwork} />
+              <ArtworkItem artwork={artwork} onShowArtwork={handleShowArtwork} />
             </div>
           ))
         ) : (
           <p className="col-span-full text-center">No artworks found in this collection.</p>
         )}
       </div>
+      <Modal
+        show={showModal}
+        editMode={editMode}
+        currentArtwork={currentArtwork}
+        onClose={handleCloseModal}
+        setArtwork={handleSaveArtwork}
+        onEdit={handleEditArtwork}
+        onDelete={handleDeleteArtwork}
+      />
     </div>
   );
 };
